@@ -12,6 +12,7 @@
   </thead>
 
   <tbody>
+    <h2>  Notes Created </h2>
     <% @notes.each do |note| %>
       <tr>
         <td><%= note.titel %></td>
@@ -30,4 +31,3 @@
 <br>
 
 <%= link_to 'New Note', new_note_path %>
-<%= link_to 'My Notes', owned_notes_path %>

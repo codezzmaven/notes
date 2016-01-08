@@ -1,6 +1,19 @@
 Rails.application.routes.draw do
+  resources :bundles do
+    collection do
+      get 'owned'
+    end
+  end
+
   devise_for :users
-  resources :notes
+  resources :notes do
+    collection do
+      get 'owned'
+    end
+    member do
+      patch 'add_to_bundle'
+    end
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

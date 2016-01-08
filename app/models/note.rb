@@ -23,6 +23,13 @@ class Note < ActiveRecord::Base
       return true if permission.level >= 1
     end
   end
+
+  def bundles_not_part_of(user)
+    bundles_part_of = self.bundles
+    user_bundles = user.bundles
+    return user_bundles - bundles_part_of
+  end
+
  
   private
   def give_permission_to_creator

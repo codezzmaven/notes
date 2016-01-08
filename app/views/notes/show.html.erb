@@ -1,5 +1,4 @@
 <p id="notice"><%= notice %></p>
-
 <p>
   <strong>Titel:</strong>
   <%= @note.titel %>
@@ -9,6 +8,21 @@
   <strong>Description:</strong>
   <%= @note.description %>
 </p>
+<p>
+  <strong>Bundles part of:</strong>
+  <% @note.bundles.each do |bundle| %>
+    <%= bundle.name %>
+  <% end %>
+</p>
+<% unless @bundles.empty? %>
+  <%= form_for(@note, url: add_to_bundle_note_path) do |f| %>
+    <% bundles_array = @bundles.map { |bundle| [bundle.name, bundle.id] } %>
+    <%= select_tag(:bundle, options_for_select(bundles_array)) %>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  <% end %>
+<% end %>
 
 <%= link_to 'Edit', edit_note_path(@note) %> |
 <%= link_to 'Back', notes_path %>

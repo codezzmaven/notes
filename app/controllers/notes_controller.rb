@@ -1,5 +1,5 @@
 class NotesController < ApplicationController
-  before_action :set_note, only: [:show, :edit, :update, :destroy]
+  before_action :set_note, only: [:show, :edit, :update, :destroy, :add_to_bundle]
   load_and_authorize_resource :except => :create
 
   # GET /notes
@@ -11,6 +11,7 @@ class NotesController < ApplicationController
   # GET /notes/1
   # GET /notes/1.json
   def show
+    @bundles = @note.bundles_not_part_of(current_user)
   end
 
   # GET /notes/new
@@ -60,6 +61,18 @@ class NotesController < ApplicationController
       format.html { redirect_to notes_url, notice: 'Note was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def owned
+    @notes = current_user.notes
+  end
+
+  def add_to_bundle
+   @bundle = Bundle.find(params[:bundle])
+   @note.bundles<< @bundle
+    print(@note)
+    print(@bundle)
+    redirect_to @note, notice: "Note was successfully added to #{@bundle.name}"
   end
 
   private
